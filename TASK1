@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>   
+
+using namespace std;
+
+void guessNumber(int lowerBound, int upperBound) {
+    srand(time(nullptr));  
+    
+    int secretNumber = rand() % (upperBound - lowerBound + 1) + lowerBound;  
+    int guess;
+
+    while (true) {
+        cout << "Guess the number (between " << lowerBound << " and " << upperBound << "): ";
+        cin >> guess;
+
+        if (guess < secretNumber) {
+            cout << "Too low! Try again." << endl;
+        } else if (guess > secretNumber) {
+            cout << "Too high! Try again." << endl;
+        } else {
+            cout << "Congratulations! You guessed the number " << secretNumber << "!" << endl;
+            break;  
+        }
+    }
+}
+
+int main() {
+    int lowerBound, upperBound;
+
+    cout << "Enter the lower bound of the range: ";
+    cin >> lowerBound;
+    cout << "Enter the upper bound of the range: ";
+    cin >> upperBound;
+
+    guessNumber(lowerBound, upperBound);
+
+    return 0;
+}
