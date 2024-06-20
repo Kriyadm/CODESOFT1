@@ -1,0 +1,179 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Book {
+private:
+    string title;
+    string author;
+    string isbn;
+    bool available;
+
+public:
+    Book(const string& title, const string& author, const string& isbn)
+        : title(title), author(author), isbn(isbn), available(true) {}
+
+    const string& getTitle() const {
+        return title;
+    }
+
+    const string& getAuthor() const {
+        return author;
+    }
+
+    const string& getISBN() const {
+        return isbn;
+    }
+
+    bool isAvailable() const {
+        return available;
+    }
+
+    void setAvailable(bool status) {
+        available = status;
+    }
+};
+
+class Library {
+private:
+    vector<Book> books;
+
+public:
+    void addBook(const Book& book) {
+        books.push_back(book);
+    }
+
+    void displayBooks() const {
+        if (books.empty()) {
+            cout << "Library is empty.\n";
+        } else {
+            cout << "Library Catalog:\n";
+            cout << "----------------\n";
+            for (const auto& book : books) {
+                cout << "Title: " << book.getTitle() << endl;
+                cout << "Author: " << book.getAuthor() << endl;
+                cout << "ISBN: " << book.getISBN() << endl;
+                cout << "Availability: " << (book.isAvailable() ? "Available" : "Not Available") << endl;
+                cout << "----------------\n";
+            }
+        }
+    }
+
+    Book* findBookByTitle(const string& title) {
+        for (auto& book : books) {
+            if (book.getTitle() == title) {
+                return &book;
+            }
+        }
+        return nullptr;
+    }
+
+    Book* findBookByISBN(const string& isbn) {
+        for (auto& book : books) {
+            if (book.getISBN() == isbn) {
+                return &book;
+            }
+        }
+        return nullptr;
+    }
+
+    void checkoutBook(Book* book) {
+        if (book) {
+            if (book->isAvailable()) {
+                book->setAvailable(false);
+                cout << "Book \"" << book->getTitle() << "\" checked out successfully.\n";
+            } else {
+                cout << "Book \"" << book->getTitle() << "\" is not available for checkout.\n";
+            }
+        } else {
+            cout << "Book not found.\n";
+        }
+    }
+
+    void returnBook(Book* book) {
+        if (book) {
+            if (!book->isAvailable()) {
+                book->setAvailable(true);
+                cout << "Book \"" << book->getTitle() << "\" returned successfully.\n";
+            } else {
+                cout << "Book \"" << book->getTitle() << "\" is already available.\n";
+            }
+        } else {
+            cout << "Book not found.\n";
+        }
+    }
+};
+
+int main() {
+    Library library;
+
+    while (true) {
+        // Display menu
+        cout << "\n===== Library Management System =====\n";
+        cout << "Hello user! welcome to Kriya's library.Choose from the below given options as \n per your need \n ENJOY READINGG!!";
+        cout << "1. Add Book\n";
+        cout << "2. Display Library Catalog\n";
+        cout << "3. Check Out Book\n";
+        cout << "4. Return Book\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+
+        int choice;
+        cin >> choice;
+        cin.ignore(); // Clear newline from input buffer
+
+        switch (choice) {
+            case 1: {
+                string title, author, isbn;
+                cout << "Enter book title: ";
+                getline(cin, title);
+                cout << "Enter author: ";
+                getline(cin, author);
+                cout << "Enter ISBN: ";
+                getline(cin, isbn);
+                library.addBook(Book(title, author, isbn));
+                cout << "Book added to the library.\n";
+                break;
+            }
+            case 2:
+                library.displayBooks();
+                break;
+            case 3: {
+                string titleOrISBN;
+                cout << "Enter book title or ISBN to check out: ";
+                getline(cin, titleOrISBN);
+                Book* bookToCheckout = nullptr;
+                if (titleOrISBN.length() == 13 || titleOrISBN.length() == 10) {
+                    bookToCheckout = library.findBookByISBN(titleOrISBN);
+                } else {
+                    bookToCheckout = library.findBookByTitle(titleOrISBN);
+                }
+                library.checkoutBook(bookToCheckout);
+                break;
+            }
+            case 4: {
+                string titleOrISBN;
+                cout << "Enter book title or ISBN to return: ";
+                getline(cin, titleOrISBN);
+                Book* bookToReturn = nullptr;
+                if (titleOrISBN.length() == 13 || titleOrISBN.length() == 10) {
+                    bookToReturn = library.findBookByISBN(titleOrISBN);
+                } else {
+                    bookToReturn = library.findBookByTitle(titleOrISBN);
+                }
+                library.returnBook(bookToReturn);
+                break;
+            }
+            case 5:
+                cout << "Exiting program.\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Please enter a number from 1 to 5.\n";
+                break;
+        }
+    }
+
+    return 0;
+}
