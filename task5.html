@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles5.css">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl text-center mb-8">Library Management System</h1>
+
+        <!-- Add Book Form -->
+        <div class="card p-4 mb-8 fade-in">
+            <h2 class="text-xl font-bold mb-4">Add Book</h2>
+            <form id="addBookForm" class="space-y-4">
+                <div>
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" class="form-input" required>
+                </div>
+                <div>
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" id="author" name="author" class="form-input" required>
+                </div>
+                <div>
+                    <label for="isbn" class="form-label">ISBN:</label>
+                    <input type="text" id="isbn" name="isbn" class="form-input" required>
+                </div>
+                <button type="submit" class="btn bg-green-500 hover:bg-green-600">Add Book</button>
+            </form>
+        </div>
+
+        <!-- Display Books -->
+        <div class="card p-4 mb-8 fade-in">
+            <h2 class="text-xl font-bold mb-4">Library Catalog</h2>
+            <div id="bookList"></div>
+        </div>
+
+        <!-- Checkout/Return Book Form -->
+        <div class="card p-4 fade-in">
+            <h2 class="text-xl font-bold mb-4">Checkout / Return Book</h2>
+            <form id="checkoutReturnForm" class="space-y-4">
+                <label for="titleOrIsbn" class="form-label">Title or ISBN:</label>
+                <input type="text" id="titleOrIsbn" name="titleOrIsbn" class="form-input" required>
+                <button type="submit" class="btn bg-red-500 hover:bg-red-600">Checkout / Return</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script5.js"></script>
+</body>
+
+</html>
